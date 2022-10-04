@@ -3,7 +3,7 @@ const Koa = require('koa');
 const koaBody = require('koa-body');
 const Router = require('koa-router');
 const cors = require('koa2-cors');
-const faker = require('faker');
+const faker = require('@faker-js/faker');
 var slow = require('koa-slow');
 
 const app = new Koa();
@@ -29,14 +29,14 @@ faker.locale = "ru";
 
 router.get('/news', async (ctx) => {
   const newsList = [];
-  
+
   // FAKER data
   for (let i = 0; i < 5; i +=1) {
     const news = {
       id: faker.datatype.uuid(),
       received: Date.now(),
       image: faker.image.avatar(),
-      body: faker.lorem.sentence(),
+      body: faker.lorem.paragraph(),
     };
     newsList.push(news);
   };
@@ -46,6 +46,7 @@ router.get('/news', async (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = process.env.PORT || 7070;
+
+const port = process.env.PORT || 7079;
 const server = http.createServer(app.callback());
 server.listen(port, () => console.log('Server started'));
