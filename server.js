@@ -4,7 +4,7 @@ const koaBody = require('koa-body');
 const Router = require('koa-router');
 const cors = require('koa2-cors');
 const faker = require('@faker-js/faker');
-var slow = require('koa-slow');
+const slow = require('koa-slow');
 
 const app = new Koa();
 app.use(slow({
@@ -33,20 +33,19 @@ router.get('/news', async (ctx) => {
   // FAKER data
   for (let i = 0; i < 5; i +=1) {
     const news = {
-      id: faker.datatype.uuid(),
+      id: faker.faker.datatype.uuid(),
       received: Date.now(),
-      image: faker.image.avatar(),
-      body: faker.lorem.paragraph(),
-    };
+      image: faker.faker.image.avatar(),
+      body: faker.faker.lorem.paragraph(),
+    }
     newsList.push(news);
   };
-
   ctx.response.body = newsList;
 });
 
 app.use(router.routes()).use(router.allowedMethods());
 
 
-const port = process.env.PORT || 7079;
+const port = process.env.PORT || 7097;
 const server = http.createServer(app.callback());
 server.listen(port, () => console.log('Server started'));
